@@ -44,12 +44,11 @@ export const ThreadListContainer = () =>{
   };
 
 
-
   return (
     <div>
       <ul>
         {threadLists.map((thread) => {
-          return <li><a href={thread.id} >{thread.title}</a></li>
+          return <li key={thread.id}><a href={thread.id} >{thread.title}</a></li>
         })}
       </ul>
       <form onSubmit={(e) => submitMakeThread(e)}>
