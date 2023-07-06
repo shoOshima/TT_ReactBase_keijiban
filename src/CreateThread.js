@@ -6,6 +6,7 @@ export const CreateThread = () =>{
   const [threadTitle,setThreadTitle] = useState("初期タイトル");
 
   let submitMakeThread = async (e)=>{
+    e.preventDefault();
     try{
       var res = await fetch("https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads",{
         method : "POST",
@@ -24,7 +25,6 @@ export const CreateThread = () =>{
     } catch (err){
       setMessage("error");
       console.log(err);
-      
     }
   };
 

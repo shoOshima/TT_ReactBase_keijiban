@@ -18,34 +18,34 @@ export const Thread = () =>{
           setPosts(result.posts);
         }
       )
-  },[]);
+  },[postMes]);
 
   let submitPost = async (e)=>{
-    try{
-      var res = await fetch(apiUrl,{
-        method : "POST",
-        body: JSON.stringify({
-          post : postMes
-        }),
+    e.preventDefault();
+    fetch(apiUrl, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        post : postMes
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+        setPostMes("");
+      })
+      .catch((error) => {
+        console.error('Error:', error);
       });
-      let resJSON = await res.JSON();
-      if (res.status == 200){
-        alert("投稿できた")
-      } else {
-        alert(res.status + ":投稿失敗")
-      }
-
-    } catch (err){
-      console.log(err);
-
     }
-  };
 
   return (
     <div>
       <h1>スレッド名:{title}</h1>
       <form onSubmit={(e) => submitPost(e)}>
-        <textarea rows="3" cols="60" placeholder="投稿する内容を書く" onChange={(e) => setPostMes(e.target.value)}></textarea>
+        <textarea rows="3" cols="60" placeholder="投稿する内容を書く" onChange={(e) => setPostMes(e.target.value)} value={postMes}></textarea>
         <button type="submit">投稿する</button>
       </form>
       <h2>▼投稿一覧</h2>
